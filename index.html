@@ -1,0 +1,201 @@
+<!doctype html>
+<html lang="nl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Meike Schaapveld · documentairemaker</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: schermvullende aftiteling-hero; projecten gecentreerd; de blauwe lijn loopt links langs alle projecten, tekent mee met scrollen en tikt de footer aan */
+:root{
+  --bg:#111313; --fg:#ecece8; --muted:#9a9e9c; --dim:#6f7472; --line:#2a2e2e; --accent:#8f9bff;
+  --serif:"Cormorant Garamond",Georgia,serif; --mono:"IBM Plex Mono",ui-monospace,monospace;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+body{margin:0;background:var(--bg);color:var(--fg);font-family:var(--mono)}
+a{color:inherit}
+a:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+#root{position:relative;overflow-x:clip}
+.hero{min-height:100vh;min-height:100svh;padding-block:48px;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:flex;flex-direction:column;align-items:center;justify-content:center;gap:22px;text-align:center;position:relative}
+.eyebrow{font-size:12px;letter-spacing:.24em;color:var(--muted)}
+h1{margin:0;font-family:var(--serif);font-weight:400;font-size:clamp(34px,7vw,104px);letter-spacing:.2em;line-height:1.05;text-wrap:balance}
+.role{font-family:var(--serif);font-style:italic;font-size:26px;color:#c9ccc9}
+.blue{width:80px;height:2px;background:var(--accent);margin-top:12px}
+nav{display:flex;flex-wrap:wrap;justify-content:center;gap:40px;font-size:14px;letter-spacing:.08em;padding-top:8px}
+nav a{text-decoration:none}
+nav a.on{color:var(--accent)}
+.scroll{position:absolute;bottom:28px;left:50%;transform:translateX(-50%);font-size:11px;letter-spacing:.14em;color:var(--dim)}
+.outer{max-width:1440px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+.wrap{padding-left:clamp(56px,14%,200px);padding-right:clamp(56px,14%,200px)}
+main{display:flex;flex-direction:column;gap:72px;padding-top:96px;min-width:0}
+.film{display:block;text-decoration:none}
+.frame{position:relative;width:100%;aspect-ratio:16/9;overflow:hidden;background:#1a1d1d}
+.frame img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;transition:transform .6s ease}
+.film:hover .frame img{transform:scale(1.015)}
+.overlay-title{position:absolute;left:50%;top:56%;transform:translateX(-50%);font-family:var(--serif);font-size:clamp(20px,3.2vw,48px);letter-spacing:.18em;color:#fff;white-space:nowrap}
+.badge{position:absolute;right:16px;top:14px;font-size:12px;color:#fff;border:1px solid rgba(255,255,255,.7);padding:4px 8px}
+.cap{padding-top:14px;display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:13px}
+.cap .y,.cap .go{color:var(--accent)}
+svg#lijn{position:absolute;left:0;top:0;pointer-events:none;z-index:3;overflow:visible}
+.mark{position:absolute;z-index:4;display:flex;flex-direction:column;gap:2px;text-decoration:none;opacity:0;transition:opacity .4s}
+.mark.l{transform:translateX(calc(-100% - 18px));align-items:flex-end;text-align:right}
+.mark.r{transform:translateX(18px);align-items:flex-start;text-align:left}
+.mark .yr{font-family:var(--serif);font-size:30px;line-height:1;color:var(--muted)}
+.mark .tt{font-size:11px;color:var(--muted);max-width:150px}
+.mark.on .yr{color:var(--accent)}
+.mark.on .tt{color:var(--fg)}
+footer{position:relative;border-top:1px solid var(--line);margin-top:96px}
+footer .inner{max-width:1320px;margin:0 auto;padding-block:32px;padding-left:max(24px,env(safe-area-inset-left,0px));padding-right:max(24px,env(safe-area-inset-right,0px));display:flex;flex-wrap:wrap;justify-content:space-between;gap:12px;font-size:14px;color:var(--muted)}
+.touch-line{position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--accent);transform:scaleX(0);transition:transform 1.1s cubic-bezier(.2,.7,.2,1)}
+.touch-dot{position:absolute;top:-6px;width:12px;height:12px;margin-left:-6px;border-radius:50%;background:var(--accent);box-shadow:0 0 0 5px rgba(143,155,255,.22);opacity:0;transition:opacity .3s}
+footer.touched .touch-line{transform:scaleX(1)}
+footer.touched .touch-dot{opacity:1}
+@media (max-width:700px){
+  .wrap{padding-left:44px;padding-right:44px}
+  .mark .yr{font-size:20px}
+  .mark .tt{display:none}
+  nav{gap:24px}
+}
+</style>
+</head>
+<body>
+<div id="root">
+  <section class="hero" id="hero">
+    <div class="eyebrow">HET WERK VAN</div>
+    <h1>MEIKE SCHAAPVELD</h1>
+    <div class="role">documentairemaker</div>
+    <div class="blue" id="blue"></div>
+    <nav aria-label="Hoofdmenu">
+      <a href="#films" class="on">FILMS</a>
+      <a href="bio.html">BIO</a>
+      <a href="media.html">MEDIA</a>
+    </nav>
+    <div class="scroll">SCROLL ↓</div>
+  </section>
+
+  <div class="outer" id="films">
+    <div class="wrap">
+      <main id="main">
+        <a class="film" href="aap-tot-aap.html" id="film-0">
+          <div class="frame"><img src="img/aap-tot-aap-startframe.jpg" alt="Openingsbeeld van Aap tot Aap"><div class="overlay-title">AAP TOT AAP</div></div>
+          <div class="cap"><span>Aap tot Aap · documentaire · <span class="y">2023</span></span><span class="go">Bekijk film →</span></div>
+        </a>
+        <a class="film" href="leek-bloot-geeft-bloot.html" id="film-1">
+          <div class="frame"><img src="img/leek-bloot-geeft-bloot.jpg" alt="Still uit Leek Bloot Geeft Bloot met de titel in beeld"></div>
+          <div class="cap"><span>Leek Bloot Geeft Bloot · korte docu · <span class="y">2025</span></span><span class="go">Bekijk film →</span></div>
+        </a>
+        <a class="film" href="my-body-doesnt-like-you.html" id="film-2">
+          <div class="frame"><img src="img/my-body-doesnt-like-you.jpg" alt="Still uit My Body Doesn’t Like You met de titel in beeld"><div class="badge">● in ontwikkeling</div></div>
+          <div class="cap"><span>My Body Doesn’t Like You · docu · 30 min · <span class="y">2026</span></span><span class="go">Volg de ontwikkeling →</span></div>
+        </a>
+      </main>
+    </div>
+  </div>
+
+  <svg id="lijn" aria-hidden="true"><path id="ghost" fill="none" stroke="#3a3f3f" stroke-width="1" stroke-dasharray="3 6"></path><path id="pad" fill="none" stroke="#8f9bff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"></path></svg>
+  <a class="mark l" href="#film-0" id="m0"><span class="yr">2023</span><span class="tt">Aap tot Aap</span></a>
+  <a class="mark l" href="#film-1" id="m1"><span class="yr">2025</span><span class="tt">Leek Bloot Geeft Bloot</span></a>
+  <a class="mark l" href="#film-2" id="m2"><span class="yr">2026</span><span class="tt">My Body Doesn’t Like You</span></a>
+
+  <footer id="foot">
+    <div class="touch-line" id="touchLine"></div>
+    <div class="touch-dot" id="touchDot"></div>
+    <div class="inner"><span>© [JAAR] Meike Schaapveld</span><span>[E-MAIL] · [INSTAGRAM]</span></div>
+  </footer>
+</div>
+
+<script>
+(function(){
+  const $ = (id) => document.getElementById(id);
+  const root = $('root'), hero = $('hero'), blue = $('blue'), main = $('main'), foot = $('foot');
+  const svg = $('lijn'), pad = $('pad'), ghost = $('ghost');
+  const films = [0,1,2].map(i => $('film-' + i));
+  const marks = [0,1,2].map(i => $('m' + i));
+  const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let geo = null, total = 1, len = 0, goal = 0, raf = null;
+
+  function layout(){
+    const R = root.getBoundingClientRect();
+    const B = blue.getBoundingClientRect();
+    const M = main.getBoundingClientRect();
+    const rel = (r) => ({ top: r.top - R.top, bottom: r.bottom - R.top });
+    const fr = films.map(f => rel(f.getBoundingClientRect()));
+    const gutter = Math.min(28, (M.left - R.left) * 0.25);
+    const L = M.left - R.left - gutter, Rx = M.right - R.left + gutter, r = 18;
+    const y0 = B.top - R.top + 1, x0 = (B.left + B.right) / 2 - R.left - 40;
+    const g1 = (fr[0].bottom + fr[1].top) / 2, g2 = (fr[1].bottom + fr[2].top) / 2;
+    const end = foot.getBoundingClientRect().top - R.top;
+    const f = (n) => n.toFixed(1);
+    const d = 'M' + f(x0) + ' ' + f(y0) +
+      ' L' + f(L + r) + ' ' + f(y0) + ' Q' + f(L) + ' ' + f(y0) + ' ' + f(L) + ' ' + f(y0 + r) +
+      ' L' + f(L) + ' ' + f(end);
+    svg.setAttribute('width', R.width); svg.setAttribute('height', R.height);
+    svg.setAttribute('viewBox', '0 0 ' + R.width + ' ' + R.height);
+    pad.setAttribute('d', d); ghost.setAttribute('d', d);
+    total = pad.getTotalLength();
+    pad.style.strokeDasharray = total;
+    const search = (y) => { let lo = 0, hi = total; for (let k = 0; k < 22; k++){ const mid = (lo + hi) / 2; if (pad.getPointAtLength(mid).y <= y) lo = mid; else hi = mid; } return lo; };
+    const a = Math.min(160, (g1 - y0) / 4);
+    const K = [[y0, 0], [y0 + 2*a, search(y0 + 2*a)], [end, total]];
+    marks.forEach((m, i) => { m.style.left = L + 'px'; m.style.top = fr[i].top + 'px'; });
+    $('touchDot').style.left = L + 'px';
+    $('touchLine').style.transformOrigin = L + 'px 50%';
+    geo = { K, fr, y0, end };
+  }
+
+  function target(){
+    if (!geo) return 0;
+    const R = root.getBoundingClientRect();
+    const vh = window.innerHeight;
+    if (R.bottom <= vh + 4) return total;
+    const T = vh * 0.62 - R.top, K = geo.K;
+    if (T <= K[0][0]) return 0;
+    for (let k = 0; k < K.length - 1; k++){
+      const [ya, la] = K[k], [yb, lb] = K[k + 1];
+      if (T <= yb) return la + (lb - la) * ((T - ya) / Math.max(1, yb - ya));
+    }
+    return total;
+  }
+
+  function paint(){
+    pad.style.strokeDashoffset = Math.max(0, total - len);
+    const frac = len / total;
+    const span = geo ? geo.end - geo.y0 : 1;
+    const vh = window.innerHeight;
+    let active = 0;
+    films.forEach((f, i) => { if (f.getBoundingClientRect().top < vh * 0.5) active = i; });
+    marks.forEach((m, i) => {
+      const at = geo ? (geo.fr[i].top - geo.y0) / span : 1;
+      m.style.opacity = (len > 4 && frac >= at - 0.02) ? 1 : 0;
+      m.classList.toggle('on', i === active);
+    });
+    foot.classList.toggle('touched', len >= total - 3);
+  }
+
+  function tick(){
+    const diff = goal - len;
+    if (Math.abs(diff) <= 0.5 || reduce){ len = goal; raf = null; paint(); return; }
+    len += diff * 0.3;
+    paint();
+    raf = requestAnimationFrame(tick);
+  }
+
+  function onScroll(){
+    goal = target();
+    if (!raf) raf = requestAnimationFrame(tick);
+  }
+
+  function refresh(){ layout(); onScroll(); }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', refresh);
+  window.addEventListener('load', refresh);
+  document.querySelectorAll('img').forEach(img => img.addEventListener('load', refresh));
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(refresh);
+  refresh();
+})();
+</script>
+</body>
+</html>
